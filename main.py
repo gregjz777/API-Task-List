@@ -28,7 +28,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.register_blueprint(swaggerui_blueprint)
 db = SQLAlchemy(app)
 
-CORS(app, origins=["https://localhost:3000", "https://localhost:5173", "https://127.0.0.1:5000"])
+CORS(app, origins=["https://localhost:5173", "https://127.0.0.1:5000"])
 
 
 # modele bazy danych
