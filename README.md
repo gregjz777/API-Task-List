@@ -37,7 +37,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://baza:SwF7Qn:WLc+98L]@192.168.75
 
 
 ## Quick start and usage
-Once launched, the application is ready to accept requests via the https protocol, for example, using the program "postman"
+Once launched, the application is ready to accept requests via the https protocol, for example, using the program "postman": 
 ![image](readme/postman.png)
 
 ### Available methods
