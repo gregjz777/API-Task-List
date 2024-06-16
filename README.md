@@ -42,7 +42,7 @@ Once launched, the application is ready to accept requests via the https protoco
 ![image](readme/postman.png)
 
 ### Available methods
-- `"GET /uzytkownik/logowanie"` : Metoda weryfikująca poświadczenia i zwracająca token dostępu, który musi być zawarty w nagłówku prawie wszystkich pozostałych metod; uwierzytelnianie odbywa się za pomocą podstawowego formularza uwierzytelniania HTTP.
+- `"GET /uzytkownik/logowanie"` :A method that verifies credentials and returns an access token, which must be included in the header of almost all other methods; authentication is done using the basic HTTP authentication form.
 - `"POST /uzytkownik"` : Creates a new user.
 - `"POST /uzytkownik/admin"` : Creates a new user with admin privileges - required admin privileges for current user
 - `"GET  /uzytkownik"` : Downloads all users - administrator rights required
