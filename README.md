@@ -91,7 +91,7 @@ For each input coming from the user, schemas have been created with the help of 
 The backend does not contain directly written "raw" SQL commands. They are implemented with the help of the SQLAlchemy library, which is an object-relational mapper that allows data structures to be represented in object-oriented form. Built-in security mechanisms here protect against SQL Injection attacks and provide support for a transaction mechanism responsible for data consistency and integrity in case of errors or failures;
 
 ### CORS
-CORS (Cross-Origin Resource Sharing) only allows connection from 3 domains (port 5000 for queries for the backend and for documentation in the swager, port 5173 for the frontend). All other queries will be automatically rejected.
+CORS (Cross-Origin Resource Sharing) only allows connection from 2 domains (port 5000 for queries for the backend and for documentation in the swager, port 5173 for the frontend). All other queries will be automatically rejected.
 ![image](readme/cors.png)
 
 ### TLS
