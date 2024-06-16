@@ -24,7 +24,7 @@ It is necessary to modify line number 26 by specifying an appropriate URI that w
 mysql://username:password@host:port/database_name
 ````
 
-#### For PostgreSQL:"
+#### For PostgreSQL:
 ````
 postgresql://username:password@host:port/database_name
 ````
