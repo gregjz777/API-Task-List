@@ -1,0 +1,904 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Lista Zadań - OpenAPI 3.0",
+    "description": "Aplikacja do zarządzania listą zadań do wykonania dla różnych użytkowników. Każdy użytkownik po zarejestrowaniu ma możliwość stworzenia swojej własnej listy zadań, wyświetlenia zadań w postaci harmonogramu na dany dzień/tydzień/miesiąc lub wyświetlenia wszystkich zadań jednocześnie w formie listy. Każde z dodanych zadań można również edytować, oznaczyć/odznaczyć jako wykonane lub usunąć.",
+    "version": "1.0.11"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:5000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "lista zadan",
+      "description": "Metody obslugujace liste zadan"
+    },
+    {
+      "name": "uzytkownik",
+      "description": "Metody obslugujace uzytkownika"
+    }
+  ],
+  "paths": {
+    "/zadanie": {
+      "post": {
+        "tags": [
+          "lista zadan"
+        ],
+        "summary": "Dodaj nowe zadanie",
+        "description": "Dodaj nowe zadanie do listy zadań",
+        "operationId": "dodajZadanie",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Utworz nowe zadanie",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/lista_zadan"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Sukces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/zadanie/{id_wybranego_zadania}": {
+      "put": {
+        "tags": [
+          "lista zadan"
+        ],
+        "summary": "Aktualizuj istniejące zadanie",
+        "description": "Aktualizuj istniejące zadanie w liście zadań",
+        "operationId": "aktualizujzadanie",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_wybranego_zadania",
+            "in": "path",
+            "description": "id zadania do zmodyfikowania",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Aktualizuj istniejące zadanie w liście zadań",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/lista_zadan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sukces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "lista zadan"
+        ],
+        "summary": "Usuń zadanie",
+        "description": "Usuwa zadanie",
+        "operationId": "usunzadanie",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_wybranego_zadania",
+            "in": "path",
+            "description": "id zadania do usunięcia",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "lista zadan"
+        ],
+        "summary": "Pobierz jedno zadanie",
+        "description": "Pobiera jedno zadanie",
+        "operationId": "pobierzzadanie",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_wybranego_zadania",
+            "in": "path",
+            "description": "id zadania do pobrania",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/lista_zadan_pobrane"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/zadanie/wszystkie": {
+      "get": {
+        "tags": [
+          "lista zadan"
+        ],
+        "summary": "Pobierz wszystkie zadania",
+        "description": "Pobiera wszystkie zadania",
+        "operationId": "pobierzwszystkiezadania",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/lista_zadan_pobrane"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "brak zadan dla danego uzytkownika",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/zadanie/filtr": {
+      "post": {
+        "tags": [
+          "lista zadan"
+        ],
+        "summary": "Pobierz harmonogram z zadaniami na dany dzień, tydzień lub miesiąc",
+        "description": "Pobiera harmonogram zadań na dany dzień, tydzień lub miesiąc",
+        "operationId": "pobierzwszystkiezadaniafiltr",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "dostepne wartosci dla zakres = [dzien, tydzien, miesiac, inny]; w przypadku wyboru zakresu \"inny\" nalezy uzupelnic takze dzien2, miesiac2, rok2",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/harmonogram"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "zapytanie udane",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/lista_zadan_pobrane"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/zadanie/wykonaj/{id_wybranego_zadania}": {
+      "put": {
+        "tags": [
+          "lista zadan"
+        ],
+        "summary": "Oznacz zadanie jako wykonane lub odznacz jako niewykonane",
+        "description": "Metoda po wywyłaniu oznacza zadanie niewykonane jako wykonane, natomiast w przypadku wywołanie na zadaniu wykonanym powoduje jego odznaczenie (zadanie staje się ponownie niewykonane)",
+        "operationId": "wykonajzadanie",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_wybranego_zadania",
+            "in": "path",
+            "description": "id zadania do usunięcia",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "brak zadan dla danego uzytkownika",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uzytkownik": {
+      "post": {
+        "tags": [
+          "uzytkownik"
+        ],
+        "summary": "Utwórz użytkownika",
+        "description": "Tworzy nowego użytkownika",
+        "operationId": "utworzuzytkownika",
+        "requestBody": {
+          "description": "Utworz nowego uzytkownika",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/uzytkownik"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "zapytanie udane",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "uzytkownik"
+        ],
+        "summary": "Pobierz wszystkich uzytkownikow",
+        "description": "Pobiera wszystkich uzytkowników - wymagane uprawnienia administratora",
+        "operationId": "pobierzwszystkichuzytkownikow",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownicy_admin"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uzytkownik/{id_wybranego_uzytkownika}": {
+      "delete": {
+        "tags": [
+          "uzytkownik"
+        ],
+        "summary": "Usuń użytkownika",
+        "description": "Usuwa użytkownika - wymagane uprawnienia administratora",
+        "operationId": "usunuzytkownika",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_wybranego_uzytkownika",
+            "in": "path",
+            "description": "id uzytkownika do usunięcia",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "zapytanie udane",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uzytkownik/admin": {
+      "post": {
+        "tags": [
+          "uzytkownik"
+        ],
+        "summary": "Utwórz użytkownika z uprawnieniami admina",
+        "description": "Tworzy nowego użytkownika z uprawnieniami admina - wymagane uprawnienia administratora dla aktualnego użytkownika",
+        "operationId": "utworzuzytkownikaadmin",
+        "parameters": [
+          {
+            "name": "token-dostepu",
+            "in": "header",
+            "description": "token weryfikujący zalogowanego użytkownika",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Utworz nowego uzytkownika",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/uzytkownik"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "zapytanie udane",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "blad uwierzytelnienia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "blad weryfikacji wejscia",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_uzytkownik"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uzytkownik/logowanie": {
+      "get": {
+        "tags": [
+          "uzytkownik"
+        ],
+        "summary": "Metoda umozliwiająca zalogowanie się użytkownika",
+        "description": "Metoda weryfikująca poświadczenia i zwracająca token dostępu; uwierzytelnienie odbywa się poprzez formularz podstawowego uwierzytelnienia HTTP (zielony przycisk z kłódką \"Authorize\" powyżej wylistowanych metod po prawej stronie)",
+        "operationId": "logowanie",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "zapytanie udane",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/odpowiedz_token"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "zapytanie nieudane",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    },
+    "schemas": {
+      "uzytkownik": {
+        "required": [
+          "nazwa",
+          "haslo"
+        ],
+        "type": "object",
+        "properties": {
+          "nazwa": {
+            "type": "string",
+            "example": "Nowyuzytkownik"
+          },
+          "haslo": {
+            "type": "string",
+            "example": "123456789a"
+          }
+        }
+      },
+      "lista_zadan": {
+        "required": [
+          "data",
+          "godzina",
+          "tytul",
+          "opis",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "example": "20.10.2023"
+          },
+          "godzina": {
+            "type": "string",
+            "example": "21:55"
+          },
+          "tytul": {
+            "type": "string",
+            "example": "wyniescsmieci"
+          },
+          "opis": {
+            "type": "string",
+            "example": "jaknajszybciej"
+          },
+          "id": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "lista_zadan_pobrane": {
+        "required": [
+          "data",
+          "godzina",
+          "tytul",
+          "opis",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "example": "20.10.2023"
+          },
+          "godzina": {
+            "type": "string",
+            "example": "21:55"
+          },
+          "tytul": {
+            "type": "string",
+            "example": "wyniescsmieci"
+          },
+          "opis": {
+            "type": "string",
+            "example": "jaknajszybciej"
+          },
+          "zakonczone": {
+            "type": "boolean",
+            "example": false
+          },
+          "id": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "harmonogram": {
+        "required": [
+          "dzien",
+          "miesiac",
+          "rok",
+          "zakres"
+        ],
+        "type": "object",
+        "properties": {
+          "dzien": {
+            "type": "integer",
+            "example": 10
+          },
+          "miesiac": {
+            "type": "integer",
+            "example": 10
+          },
+          "rok": {
+            "type": "integer",
+            "example": 2023
+          },
+          "zakres": {
+            "type": "string",
+            "example": "dzien"
+          },
+          "dzien2": {
+            "type": "integer",
+            "example": 10
+          },
+          "miesiac2": {
+            "type": "integer",
+            "example": 10
+          },
+          "rok2": {
+            "type": "integer",
+            "example": 2023
+          }
+        }
+      },
+      "odpowiedz_uzytkownik": {
+        "required": [
+          "wiadomosc"
+        ],
+        "type": "object",
+        "properties": {
+          "wiadomosc": {
+            "type": "string"
+          }
+        }
+      },
+      "odpowiedz_token": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "odpowiedz_uzytkownicy_admin": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "nazwa": {
+            "type": "string"
+          },
+          "publiczne_id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
